@@ -272,10 +272,10 @@ def kicker(cv, x, y, s):
 # ---------------------------------------------------------------- pictures
 def pic_benghazi(cv, x, y, w, h):
     """Night port at Benghazi: a Russian corvette listing and burning
-    at its berth, a small drone boat slipping away. Drawn for 400x196."""
+    at its berth, a small drone boat slipping away. Drawn for 368x176."""
     cv.rect(x, y, w, h, NIGHT)
     for sx, sy, r in ((24, 16, 2), (84, 10, 1), (150, 22, 2), (210, 12, 1),
-                      (300, 14, 2), (360, 24, 1), (60, 44, 1), (250, 40, 1),
+                      (300, 14, 2), (352, 24, 1), (60, 44, 1), (250, 40, 1),
                       (330, 52, 1), (120, 60, 1)):
         cv.circle(x + sx, y + sy, r, WHITE)
     # moon
@@ -285,7 +285,7 @@ def pic_benghazi(cv, x, y, w, h):
     shore = y + 108
     cv.rect(x, y + 78, w, shore - (y + 78), (8, 12, 28))
     for bx, bw, bh in ((8, 34, 30), (46, 26, 44), (76, 40, 24),
-                       (250, 30, 38), (284, 36, 26), (324, 28, 48)):
+                       (250, 30, 38), (284, 36, 26), (320, 28, 40)):
         cv.rect(x + bx, shore - bh, bw, bh, (5, 8, 20))
     # one minaret
     cv.rect(x + 200, shore - 58, 8, 58, (5, 8, 20))
@@ -301,8 +301,8 @@ def pic_benghazi(cv, x, y, w, h):
     # sea
     cv.rect(x, shore, w, y + h - shore, DEEPSEA)
     for wx in range(12, w - 20, 46):
-        cv.rect(x + wx, shore + 62, 26, 2, SEA)
-        cv.rect(x + wx + 18, shore + 74, 18, 2, (40, 90, 150))
+        cv.rect(x + wx, shore + 44, 26, 2, SEA)
+        cv.rect(x + wx + 18, shore + 54, 18, 2, (40, 90, 150))
     # the corvette, listing by the stern
     sx, sy = x + 66, shore + 6
     cv.polygon([(sx, sy - 34), (sx + 150, sy - 26), (sx + 214, sy - 12),
@@ -557,14 +557,14 @@ def build():
     cv = Canvas(W, H, PAPER)
 
     # masthead
-    cv.text_centered(W // 2, 8, "TUESDAY - THE WORLD IN ONE PICTURE", 3, INK)
-    cv.rect(24, 36, W - 48, 5, INK)
-    cv.text_centered(W // 2, 44, "24 NOVEMBER 2026", 7, RED)
-    cv.rect(24, 100, W - 48, 3, INK)
-    cv.rect(24, 107, W - 48, 7, INK)
+    cv.text_centered(W // 2, 6, "TUESDAY - THE WORLD IN ONE PICTURE", 3, INK)
+    cv.rect(24, 30, W - 48, 5, INK)
+    cv.text_centered(W // 2, 34, "24 NOVEMBER 2026", 6, RED)
+    cv.rect(24, 80, W - 48, 3, INK)
+    cv.rect(24, 86, W - 48, 7, INK)
 
     # numbers strip under the masthead
-    sx, sy, sh = 24, 122, 54
+    sx, sy, sh = 24, 95, 52
     cv.rect(sx, sy, W - 48, sh, WHITE)
     cv.frame(sx, sy, W - 48, sh, INK, 2)
     cells = [("258", "SEATS"), ("60", "BANKS"), ("330", "VOTES"),
@@ -576,72 +576,83 @@ def build():
             cv.rect(cx0, sy, 2, sh, INK)
         ccx = cx0 + cw // 2
         cv.text_centered(ccx, sy + 5, num, 4, RED)
-        cv.text_centered(ccx, sy + 36, lab, 2, INK)
+        cv.text_centered(ccx, sy + 35, lab, 2, INK)
 
     # ---- lead story: Benghazi, double-size panel
-    ax, ay, aw, ah = 24, 184, W - 48, 218
+    ax, ay, aw, ah = 24, 155, W - 48, 196
     panel(cv, ax, ay, aw, ah)
-    pic_benghazi(cv, ax + 14, ay + 12, 400, ah - 24)
-    tx = ax + 428
-    kicker(cv, tx, ay + 12, "LIBYA")
-    cv.text(tx, ay + 38, "UKRAINE SINKS", 5, INK)
-    cv.text(tx, ay + 76, "RUSSIAN WARSHIP", 5, RED)
-    cv.rect(tx, ay + 118, aw - 442, 3, INK)
-    cv.text_wrapped(tx, ay + 126, "A UKRAINIAN SEA DRONE SANK A RUSSIAN "
-                    "CORVETTE AT ITS BERTH IN BENGHAZI AND DESTROYED "
-                    "A HELICOPTER.", 2, INK, aw - 442, line_gap=1)
-    cv.text_wrapped(tx, ay + 126 + 3 * 15,
-                    "ZELENSKY CLAIMED THE STRIKE. LIBYA'S EASTERN "
-                    "GOVERNMENT FILED A FORMAL COMPLAINT AT THE UN.",
-                    2, INK, aw - 442, line_gap=1)
+    pic_benghazi(cv, ax + 14, ay + 8, 368, ah - 20)
+    tx = ax + 396
+    kicker(cv, tx, ay + 8, "LIBYA")
+    cv.text(tx, ay + 34, "UKRAINE SINKS", 5, INK)
+    cv.text(tx, ay + 72, "RUSSIAN WARSHIP", 5, RED)
+    cv.rect(tx, ay + 113, aw - 410, 3, INK)
+    cv.text_wrapped(tx, ay + 119, "A UKRAINIAN SEA DRONE SANK A RUSSIAN "
+                    "NAVY CORVETTE AT ITS BERTH IN BENGHAZI AND DESTROYED "
+                    "A HELICOPTER. ZELENSKY CLAIMED THE STRIKE. LIBYA'S "
+                    "EASTERN GOVERNMENT FILED A FORMAL COMPLAINT AT THE UN "
+                    "DEMANDING AN INVESTIGATION.",
+                    2, INK, aw - 410, line_gap=0)
 
     # ---- rows of two, then three
     bw = (W - 48 - 16) // 2
     qx = 24 + bw + 16
 
     def story2(x, y, pic, kick, head1, head2, facts):
-        panel(cv, x, y, bw, 204)
-        pic(cv, x + 14, y + 8, bw - 28, 66)
-        kicker(cv, x + 14, y + 80, kick)
-        cv.text(x + 14, y + 102, head1, 3, INK)
-        cv.text(x + 14, y + 125, head2, 3, RED)
-        cv.rect(x + 14, y + 152, bw - 28, 3, INK)
-        cv.text_wrapped(x + 14, y + 158, facts, 2, INK, bw - 28, line_gap=1)
+        panel(cv, x, y, bw, 242)
+        pic(cv, x + 14, y + 6, bw - 28, 66)
+        kicker(cv, x + 14, y + 76, kick)
+        cv.text(x + 14, y + 98, head1, 2, INK)
+        cv.text(x + 14, y + 113, head2, 2, RED)
+        cv.rect(x + 14, y + 133, bw - 28, 3, INK)
+        cv.text_wrapped(x + 14, y + 138, facts, 2, INK, bw - 28, line_gap=0)
 
     def story3(x, w, y, pic, kick, head1, head2, facts):
-        panel(cv, x, y, w, 176)
-        pic(cv, x + 10, y + 6, w - 20, 50)
-        kicker(cv, x + 10, y + 60, kick)
-        cv.text(x + 10, y + 82, head1, 2, INK)
-        cv.text(x + 10, y + 100, head2, 2, RED)
-        cv.rect(x + 10, y + 118, w - 20, 3, INK)
-        cv.text_wrapped(x + 10, y + 124, facts, 2, INK, w - 20, line_gap=1)
+        panel(cv, x, y, w, 160)
+        pic(cv, x + 10, y + 3, w - 20, 50)
+        kicker(cv, x + 10, y + 57, kick)
+        cv.text(x + 10, y + 77, head1, 2, INK)
+        cv.text(x + 10, y + 92, head2, 2, RED)
+        cv.rect(x + 10, y + 110, w - 20, 3, INK)
+        cv.text_wrapped(x + 10, y + 116, facts, 1, INK, w - 20, line_gap=1)
 
-    story2(24, 412, pic_hormuz, "GULF", "THREE MORE SHIPS", "HIT IN HORMUZ",
-           "WEEKEND STRIKES BRING ATTACKS TO THE HIGHEST PACE SINCE "
-           "FEBRUARY. TRUMP MAY RESUME STRIKES ON IRAN.")
-    story2(qx, 412, pic_eu, "EUROPE", "EU AIMS SANCTIONS", "AT 60 RUSSIAN BANKS",
-           "BRUSSELS PROPOSES CUTTING 60 BANKS FROM SWIFT, A CRYPTO "
-           "CRACKDOWN AND A PORT BAN ON 70 SHADOW TANKERS.")
-    story2(24, 626, pic_washington, "AMERICA", "DEMOCRATS TAKE", "258 HOUSE SEATS",
-           "LARGEST HOUSE MAJORITY SINCE 1992. CHUCK HUBBARD BEAT "
-           "VIRGINIA FOXX BY 330 VOTES OF 287,000 AFTER A RECOUNT.")
-    story2(qx, 626, pic_gaza, "MIDDLE EAST", "AID WORKERS", "KILLED IN GAZA",
-           "AN ISRAELI STRIKE HIT A CAR OF FOOD FOR DISPLACED PEOPLE. "
-           "SIX DIED SATURDAY, SIX MORE SUNDAY.")
+    story2(24, 359, pic_hormuz, "GULF", "THREE MORE SHIPS", "HIT IN HORMUZ",
+           "WEEKEND ATTACKS BRING THE PACE OF STRIKES ON SHIPPING TO ITS "
+           "HIGHEST SINCE FEBRUARY, DESPITE THE US NAVAL BLOCKADE OF "
+           "IRANIAN PORTS. TRUMP SAYS HE IS INCLINED TO RESUME STRIKES ON "
+           "IRAN AFTER THE NEW YEAR IF NO DEAL IS REACHED.")
+    story2(qx, 359, pic_eu, "EUROPE", "EU AIMS SANCTIONS", "AT 60 RUSSIAN BANKS",
+           "THE EUROPEAN COMMISSION PROPOSES CUTTING 60 BANKS FROM SWIFT, "
+           "A CRACKDOWN ON CRYPTO PLATFORMS AND A PORT BAN ON 70 MORE "
+           "SHADOW FLEET TANKERS.")
+    story2(24, 609, pic_washington, "AMERICA", "DEMOCRATS TAKE", "258 HOUSE SEATS",
+           "THE LARGEST HOUSE MAJORITY SINCE 1992, SEALED SUNDAY WHEN "
+           "CHUCK HUBBARD BEAT VIRGINIA FOXX BY 330 VOTES OUT OF 287,000 "
+           "IN NORTH CAROLINA AFTER A RECOUNT. REPUBLICANS HOLD AT LEAST "
+           "173. FOUR RACES STILL UNCALLED.")
+    story2(qx, 609, pic_gaza, "MIDDLE EAST", "AID WORKERS", "KILLED IN GAZA",
+           "AN ISRAELI STRIKE HIT A CAR CARRYING PACKAGED FOOD FOR "
+           "DISPLACED PEOPLE. PAPERS OF THE WORLD CENTRAL KITCHEN CHARITY "
+           "WERE FOUND IN THE WRECK. SIX DIED SATURDAY, SIX MORE SUNDAY, "
+           "AND A UNRWA WORKER WAS KILLED MONDAY.")
 
-    cw3 = (W - 48 - 32) // 3
-    rx = 24 + cw3 + 16
-    rx2 = rx + cw3 + 16
-    w3 = W - 48 - 2 * cw3 - 32
-    story3(24, cw3, 840, pic_khartoum, "AFRICA", "DRONES STRIKE", "KHARTOUM AGAIN",
-           "DRONE STRIKES KILL FOUR IN GREATER KHARTOUM. A UN BUILDING "
-           "IS DAMAGED.")
-    story3(rx, cw3, 840, pic_students, "EUROPE", "STUDENTS FLOOD", "EUROPE'S STREETS",
-           "STRIKE IN 100+ ITALIAN CITIES. TENS OF THOUSANDS MARCH "
-           "IN PARIS.")
-    story3(rx2, w3, 840, pic_seoul, "ASIA", "SEOUL NAMES NEW", "TOP DIPLOMATS",
-           "LEE JAE MYUNG NAMES NEW FOREIGN AND UNIFICATION MINISTERS.")
+    cw3 = (W - 48 - 16) // 3
+    rx = 24 + cw3 + 8
+    rx2 = rx + cw3 + 8
+    w3 = W - 48 - 2 * cw3 - 16
+    story3(24, cw3, 859, pic_khartoum, "AFRICA", "DRONES STRIKE", "KHARTOUM AGAIN",
+           "AT LEAST FOUR PEOPLE WERE KILLED IN DRONE STRIKES ACROSS "
+           "GREATER KHARTOUM AND SOUTH OF THE CAPITAL. A UN BUILDING WAS "
+           "ALSO DAMAGED.")
+    story3(rx, cw3, 859, pic_students, "EUROPE", "STUDENTS FLOOD", "EUROPE'S STREETS",
+           "A STUDENT-LED WAVE SWEPT EUROPE: A NATIONWIDE STRIKE IN MORE "
+           "THAN 100 ITALIAN CITIES, TENS OF THOUSANDS MARCHING IN PARIS, "
+           "PROTESTS FROM SPAIN TO THE UK. DEMANDS: HIGHER WAGES, LOWER "
+           "RENTS, BETTER SCHOOLS, NO CONSCRIPTION.")
+    story3(rx2, w3, 859, pic_seoul, "ASIA", "SEOUL NAMES NEW", "TOP DIPLOMATS",
+           "PRESIDENT LEE JAE MYUNG NOMINATED NEW FOREIGN AND UNIFICATION "
+           "MINISTERS IN A CABINET RESHUFFLE, AMID CALLS TO BETTER MANAGE "
+           "THE ALLIANCE WITH WASHINGTON.")
 
     return cv
 
